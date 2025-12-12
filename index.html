@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-            <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
@@ -47,45 +47,55 @@
             </button>
         </form>
     </div>
-    <script>
-        const name = document.getElementById("name")
-        const des = document.getElementById("des")
-        const price = document.getElementById("price")
-        const quantity = document.getElementById("quantity")
+<script>
+    const name = document.getElementById("name");
+    const des = document.getElementById("des");
+    const price = document.getElementById("price");
+    const quantity = document.getElementById("quantity");
 
-        const login = () => {
-            const nameValue = name.value.trim();
-            const desValue = des.value.trim();
+    const login = () => {
 
-            if (Number(quantity.value) === 0 || quantity.value.trim() === "") {
-                alert("Quantity Required");
-                return;
-            }
-            let p = Number(price.value);
-            if (quantity == 0) {
-                alert("Quantity Required")
-            }
-            let discount = 0;
-            if (p >= 1000) {
-                dis = 20;
-            }
-            else if (p >= 500) {
-                dis = 10;
-            }
-            else if (p >= 100) {
-                dis = 5;
-            }
-            else {
-                dis = 0;
-            }
-            console.log("Create clicked");
-            console.log("Name:", name.value);
-            console.log("Description:", des.value);
-            console.log("Price:", p);
-            console.log("Discount:", dis + "%");
-            console.log("Quantity:", quantity.value);
-        };
-    </script>
+        const nameValue = name.value.trim();
+        const desValue = des.value.trim();
+
+        // quantity check
+        if (Number(quantity.value) === 0 || quantity.value.trim() === "") {
+            alert("Quantity Required");
+            return;
+        }
+
+        let p = Number(price.value);
+        let q = Number(quantity.value);
+
+        // discount variable (one only)
+        let discount = 0;
+
+        if (p >= 1000) {
+            discount = 20;
+        } else if (p >= 500) {
+            discount = 10;
+        } else if (p >= 100) {
+            discount = 5;
+        } else {
+            discount = 0;
+        }
+
+        // calculations
+        let subtotal = p * q;
+        let discountAmount = (subtotal * discount) / 100;
+        let totalAfterDiscount = subtotal - discountAmount;
+
+        console.log("Create clicked");
+        console.log("Name:", nameValue);
+        console.log("Description:", desValue);
+        console.log("Price:", p);
+        console.log("Quantity:", q);
+        console.log("Discount:", discount + "%");
+        console.log("Subtotal:", subtotal);
+        console.log("Discount Amount:", discountAmount);
+        console.log("Total After Discount:", totalAfterDiscount);
+    };
+</script>
 </body>
 
 </html>
