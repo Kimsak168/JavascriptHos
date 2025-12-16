@@ -4,67 +4,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Number</title>
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Document</title>
 
 </head>
 
-<body class="bg-gray-100 flex items-center justify-center h-screen">
-       <!-- <script>
-        console.log("Hello Love")
-        document.body.innerHTML = `
-            <h1 id="title">Hello Students</h1>
-            <button id="btn">Click Me</button>
-`;
-document.getElementById('btn'). onclick = () =>{
-    document.getElementById('title').innerText = "This is me"
-} -->
-    <!-- <h1 id="name"></h1>
-        <script>
-            const nameElement = document. getElementById('name')
-            nameElement.innerText = 'KIMSAK  SKS'
-            console.log("This is my lover singular")
-            let number = 100
-            console.log('check type', typeof number)
-        </script> -->
-<!-- 
-    </script> -->
+<body>
 
+    <button onclick="renderProduct()">Load Product</button>
+    <button onclick="clearProduct()">Clear Product</button>
+    <form action="">
+        <label for="">Product Id </label>
+        <input type="text" id="productId"> <br> <br>
 
+        <label for="">Product Name</label>
+        <input type="text" id="name"><br> <br>
+
+        <label for="">Price</label>
+        <input type="text" id="price"> <br> <br>
+        <label for="">Qty</label>
+        <input type="text" id="qty"> <br> <br>
+
+        <button type="button" onclick="createProduct()">Create</button>
+
+    </form>
+    <table>
+        <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th colspan="2">Action</th>
+        </thead>
+        <tbody id="productTableBody">
+            <!-- <tr>
+        <td>1</td>
+        <td>Iphone</td>
+        <td>400</td>
+        <td>4</td>
+        <td><button class="px-2 py-2 bg-green-500 rounded-lg mr-2">Edit</button></td>
+        <td><button class="px-2 py-2 bg-red-500 rounded-lg">Delete</button></td>
+      </tr> -->
+
+        </tbody>
+    </table>
     <script>
-        let name = 'Granger';
-        let description = 'Hero in Mobile legend';
-        let price = 299;
-        let discount = 70;
-        let quantity = 56;
-        let status = 'Have Stock';
-        let isActive = true;
+        const tbody = document.getElementById("productTableBody") // tbody
+        const productId = document.getElementById("productId")
+        const name = document.getElementById("name")
+        const price = document.getElementById("price")
+        const qty = document.getElementById("qty")
 
-        let finalPrice = price - (price * discount /100)
+        let products = []
 
-        console.log('Result')
-        console.log('Hero Name', name)
-        console.log('Description', description)
-        console.log('Hero Price ', price + "$")
-        console.log('Hero Discount ', discount +"%")
-        console.log('Quantity' , quantity)
-        console.log('Hero Stock' , status)
-        console.log('Active ', isActive)
-        console.log('Final Price after discount', finalPrice)
+        function clearProduct() {
+            products = []
+            tbody.innerHTML = ""
+        }
+        function createProduct() {
+            const newProduct = {
+                id: productId.value,
+                name: name.value,
+                price: price.value,
+                qty: qty.value,
+            }
 
-        console.log('Data Type of Name String' )
-        console.log('Data Type of Description String' )
-        console.log('Data Type of Price number')
-        console.log('Data Type of Discount number')
-        console.log('Data Type of  Quantity number' )
-        console.log('Data Type of Status String' )
-        console.log('Data Type of  Active Boolean' )
+            const total = Number(newProduct.price) + Number(newProduct.qty)
 
+            console.log("Talta", total)
+
+            products.push(newProduct)
+            renderProduct()
+
+            clearValue()
+
+            console.log("new product", newProduct)
+        }
+        function renderProduct() {
+            tbody.innerHTML = ""
+            products.forEach(product => {
+                const tr = document.createElement('tr')
+                tr.innerHTML = `
+           <td>${product.id}</td>
+            <td style="color: red;">${product.name}</td>
+            <td>${product.price}</td>
+            <td>${product.qty}</td>
+            <td><button>Edit</button></td>
+            <td><button>Delete</button></td>
+        `
+
+                tbody.append(tr)
+            })
+        }
+
+        function clearValue() {
+            productId.value = ""
+        }
 
 
     </script>
-
-
 </body>
 
 </html>
