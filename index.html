@@ -55,8 +55,7 @@
                     </tr>
                 </thead>
 
-                <tbody id="productTableBody" class="bg-white divide-y">
-                </tbody>
+                <tbody id="productTableBody" class="bg-white divide-y"></tbody>
             </table>
         </div>
     </main>
@@ -117,6 +116,11 @@
                         onclick="createProduct()">
                         Add Product
                     </button>
+                    <button id="updateBtn" type="button"
+                        class="w-full mt-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg hidden"
+                        onclick="updateProduct()">
+                        Update Product
+                    </button>
                 </form>
             </div>
         </div>
@@ -131,6 +135,7 @@
 
         let products = [];
         let autoId = 1;
+        let productIndex;
 
         function createProduct() {
             const newProduct = {
@@ -139,7 +144,7 @@
                 color: color.value,
                 price: price.value,
                 category: category.value,
-                description: description.value
+                description: description.value,
             };
 
             products.push(newProduct);
@@ -154,12 +159,50 @@
             category.value = "Select category";
             description.value = "";
         }
+        function editProduct(index) {
+            const product = products[index];
+            console.log("product", product);
+            name.value = product.name;
+            color.value = product.color;
+            price.value = product.price;
+            category.value = product.category;
+            description.value = product.description;
 
+            productIndex = index;
+            document.querySelector('[data-modal-target="crud-modal"]').click();
+            document.querySelector('[onclick="createProduct()"]').classList.add("hidden");
+            document.getElementById("updateBtn").classList.remove("hidden");
+        }
+
+        function updateProduct() {
+            const updateProduct = {
+                id: products[productIndex].id,
+                name: name.value,
+                color: color.value,
+                price: price.value,
+                category: category.value,
+                description: description.value,
+
+            };
+            products[productIndex] = updateProduct;
+            renderProduct();
+            clearForm();
+    document.getElementById("updateBtn").classList.add("hidden");
+    document.querySelector('[onclick="createProduct()"]').classList.remove("hidden");
+    document.querySelector('[data-modal-toggle="crud-modal"]').click();
+}
+
+
+
+        function deleteProduct(index ){
+            products.splice(index,1);
+            renderProduct();
+        }
 
         function renderProduct() {
             tbody.innerHTML = "";
 
-            products.forEach(product => {
+            products.forEach((product, index) => {
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
                 <td class="px-6 py-3">${product.id}</td>
@@ -168,8 +211,8 @@
                 <td class="px-6 py-3">${product.category}</td>
                 <td class="px-6 py-3">$${product.price}</td>
                 <td class="px-6 py-3 text-center space-x-2">
-                <button class="px-2 py-1 bg-green-500 text-white rounded">Edit</button>
-                <button class="px-2 py-1 bg-red-500 text-white rounded">Delete</button>
+                <button class="px-2 py-1 bg-green-500 text-white rounded" onclick = "editProduct(${index})">Edit</button>
+                <button class="px-2 py-1 bg-red-500 text-white rounded" onclick ="deleteProduct(${index})">Delete</button>
                 </td>
 
             `;
@@ -177,7 +220,6 @@
             });
         }
     </script>
-
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 </body>
